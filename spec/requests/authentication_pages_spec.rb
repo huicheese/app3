@@ -103,7 +103,6 @@ describe "Authentication" do
           specify { expect(response).to redirect_to(signin_path) }
         end
       end
-      end
 
       describe "in the Users controller" do
 
@@ -132,7 +131,7 @@ describe "Authentication" do
           it { should have_title('Sign in') }
         end
       end
-  	#end
+  	end
 
      describe "as wrong user" do
       let(:user) { FactoryGirl.create(:user) }
