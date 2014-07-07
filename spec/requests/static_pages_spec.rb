@@ -13,7 +13,8 @@ describe "User pages" do
       visit users_path
     end
 
-    it { should have_selector('title', text: 'All users') }
+    it { should have_title('All users') }
+    it { should have_content('All users') }
 
     describe "pagination" do
       before(:all) { 30.times { FactoryGirl.create(:user) } }
@@ -33,7 +34,7 @@ describe "User pages" do
 
         it { should have_link('delete', href: user_path(User.first)) }
         it "should be able to delete another user" do
-          expect { click_link('delete') }.to change(User, :count).by(-1)
+          expect { click_link('delete', match: :first) }.to change(User, :count).by(-1)
         end
         it { should_not have_link('delete', href: user_path(admin)) }
       end
@@ -54,7 +55,7 @@ describe "User pages" do
     before { visit user_path(user) }
 
     it { should have_selector('h1',    text: user.name) }
-    it { should have_selector('title', text: user.name) }
+    it { should have_title(user.name) }
 
     describe "microposts" do
       it { should have_content(m1.content) }
@@ -117,7 +118,7 @@ describe "User pages" do
     before { visit signup_path }
     
     it { should have_selector('h1',     text: 'Sign up') }
-    it { should have_selector('title',  text: full_title('Sign up')) }
+    it { should have_title(full_title('Sign up')) }
   end
   
   describe "signup" do
@@ -148,7 +149,7 @@ describe "User pages" do
         before { click_button "Create my account" }
         let(:user) { User.find_by_email('user@example.com') }
 
-        it { should have_selector('title', text: user.name) }
+        it { should have_title(user.name) }
         it { should have_selector('div.alert.alert-success', text: 'Welcome') }
         
         it { should have_link('Sign out') }
@@ -166,7 +167,7 @@ describe "User pages" do
       
     describe "page" do
       it { should have_selector('h1',    text: "Update your profile") }
-      it { should have_selector('title', text: "Edit user") }
+      it { should have_title("Edit user") }
       it { should have_link('change', href: 'http://gravatar.com/emails') }
     end
 
@@ -187,7 +188,7 @@ describe "User pages" do
         click_button "Save changes"
       end
 
-      it { should have_selector('title', text: new_name) }
+      it { should have_title(new_name) }
       it { should have_selector('div.alert.alert-success') }
       it { should have_link('Sign out', :href => signout_path) }
       specify { user.reload.name.should  == new_name }
