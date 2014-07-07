@@ -1,7 +1,5 @@
 == README
 
-Problems:
+app is on secure-anchorage-6948.herokuapp.com
 
-1. Failures in tests
-2. unable to do heroku run rake db:populate
 
